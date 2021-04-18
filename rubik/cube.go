@@ -29,7 +29,12 @@ var Color = map[int8]string{
 	0x06: "G", // GREEN
 }
 
-func InitCube() Cube {
+func CubeToString(cube Cube) string {
+	var str string = string(cube.right) + string(cube.left) + string(cube.down) + string(cube.back) + string(cube.front) + string(cube.up)
+	return str
+}
+
+func InstanceCube() Cube {
 	cube := Cube{}
 	cube.up = make([]byte, 8)
 	cube.down = make([]byte, 8)
@@ -37,6 +42,11 @@ func InitCube() Cube {
 	cube.right = make([]byte, 8)
 	cube.front = make([]byte, 8)
 	cube.back = make([]byte, 8)
+	return cube
+}
+
+func InitCube() Cube {
+	cube := InstanceCube()
 	binary.LittleEndian.PutUint64(cube.up, 0x0303030303030303)
 	binary.LittleEndian.PutUint64(cube.down, 0x0404040404040404)
 	binary.LittleEndian.PutUint64(cube.front, 0x0101010101010101)
@@ -55,7 +65,7 @@ func CreateCube(sequence []string, generator bool, nb_iter int) Cube {
 	if generator {
 		GenerateShuffle(start_cube, nb_iter)
 	} else {
-		SequenceShuffle(start_cube, sequence)
+		SequenceShuffle(start_cube, sequence, false)
 	}
 	return start_cube
 }

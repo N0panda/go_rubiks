@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 func OneMove(cube Cube, move string) {
@@ -56,6 +57,7 @@ func GenerateShuffle(cube Cube, nb_iter int) {
 	// take nb_iter times a random move in the list and apply it to the cube
 	dict := strings.Fields("F R U B L D F2 R2 U2 B2 L2 D2 F' R' U' B' L' D'")
 	max := len(dict)
+	rand.Seed(time.Now().UnixNano())
 
 	for i := 0; i < nb_iter; i++ {
 		random := dict[rand.Intn(max)]
@@ -63,8 +65,12 @@ func GenerateShuffle(cube Cube, nb_iter int) {
 	}
 }
 
-func SequenceShuffle(cube Cube, sequence []string) {
+func SequenceShuffle(cube Cube, sequence []string, d bool) {
 	for _, move := range sequence {
 		OneMove(cube, move)
+		if d {
+			fmt.Println("\n\nMove : ", move)
+			DecodingCube(cube)
+		}
 	}
 }

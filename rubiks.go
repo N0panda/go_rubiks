@@ -21,8 +21,8 @@ func argParsing() Params {
 	params := Params{}
 
 	flag.BoolVar(&params.h_flag, "h", false, "Display healp")
-	flag.BoolVar(&params.d_flag, "d", false, "Display each iteration during the solving")
-	flag.BoolVar(&params.v_flag, "v", false, "Start a 3D visual of the solving")
+	flag.BoolVar(&params.d_flag, "d", false, "visualize movements")
+	flag.BoolVar(&params.v_flag, "v", false, "verbose")
 	flag.IntVar(&params.g_flag, "g", 0, "Positive int represente the number of moves to shuffle the cube instead of use a string, this param is overloarded by a moves string")
 	flag.Parse()
 
@@ -58,7 +58,7 @@ func main() {
 	}
 	// Create crube and shuffle it (generator or given sequence)
 	cube := rubik.CreateCube(params.dict_sequence, params.generator, params.g_flag)
-	rubik.DecodingCube(cube)
 
-	//solving the cube
+	// solving the cube
+	rubik.SolveCube(cube, params.v_flag, params.d_flag)
 }
